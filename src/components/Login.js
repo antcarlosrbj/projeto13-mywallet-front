@@ -23,7 +23,7 @@ export default function Login({URL_BACK, setToken}) {
         
         const promisse = axios.post(URL_BACK+"/login", {
             email: email,
-            password, password
+            password: password
         })
 
         promisse.then(res => {
@@ -43,8 +43,8 @@ export default function Login({URL_BACK, setToken}) {
         <LoginStyle>
             <h1>MyWallet</h1>
             <form onSubmit={loginForm}>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
+                <input type="email" value={email} placeholder="E-mail" onChange={e => setEmail(e.target.value)} required />
+                <input type="password" value={password} placeholder="Senha" onChange={e => setPassword(e.target.value)} required />
                 <button type="submit">Entrar</button>
             </form>
             {erro}

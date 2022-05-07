@@ -15,9 +15,9 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home token={token} />} />
                 <Route path="/login" element={<Login URL_BACK={URL_BACK} setToken={setToken} />} />
-                <Route path="/sign-up" element={<SignUp />} />
+                <Route path="/sign-up" element={<SignUp URL_BACK={URL_BACK} />} />
                 {/* <Route path="/entry" element={<Entry />} /> */}
             </Routes>
         </BrowserRouter>
