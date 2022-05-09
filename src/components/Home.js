@@ -12,6 +12,21 @@ export default function Home({ name, setEntry, setName, token, URL_BACK }) {
 
     const empty = <p>Não há registros de entrada ou saída</p>;
 
+    function getTransactions() {
+        const promisse = axios.get(URL_BACK + "/account", {
+            headers: {
+                "authorization": `Bearer ${token}`
+            }
+        })
+
+        promisse.then(res => {
+            setTransactions(res.data);
+        })
+        promisse.catch(erro => {
+            console.log(erro);
+        })
+    }
+
     useEffect(() => {
         if (token === "") {
             navigate("/login");
@@ -35,18 +50,8 @@ export default function Home({ name, setEntry, setName, token, URL_BACK }) {
 
         /* BUSCANDO TRASAÇÕES */
 
-        const promisse = axios.get(URL_BACK + "/account", {
-            headers: {
-                "authorization": `Bearer ${token}`
-            }
-        })
+        getTransactions();
 
-        promisse.then(res => {
-            setTransactions(res.data);
-        })
-        promisse.catch(erro => {
-            console.log(erro);
-        })
     }, [])
 
     function balanceCalc(res) {
@@ -83,6 +88,26 @@ export default function Home({ name, setEntry, setName, token, URL_BACK }) {
         navigate("/entry");
     }
 
+    function remove(id) {
+        if(window.confirm("Você quer excluir essa transação?")) {
+            const promisse = axios.delete(URL_BACK + "/account", {
+                data: {
+                    _id: id
+                },
+                headers: {
+                    "authorization": `Bearer ${token}`
+                }
+            })
+
+            promisse.then(res => {
+                getTransactions();
+            })
+            promisse.catch(error => {
+                console.log(error);
+            })
+        }
+    }
+
     return (
         <HomeStyle>
             <Header>
@@ -102,6 +127,7 @@ export default function Home({ name, setEntry, setName, token, URL_BACK }) {
                                     }>{
                                             Intl.NumberFormat('pt-BR', { style: "currency", currency: "BRL" }).format(transaction.value)
                                     }</p>
+                                    <p onClick={() => remove(transaction._id)} className="remove">x</p>
                                 </div>
                             );
                         })
@@ -225,6 +251,12 @@ const Budget = styled.div`
 
     .debit {
         color: red;
+    }
+
+    .remove {
+        margin-left: 5px;
+        font-size: 16px;
+        color: #C6C6C6;
     }
 `;
 
