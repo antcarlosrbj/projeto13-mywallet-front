@@ -39,7 +39,7 @@ export default function SignUp({ URL_BACK }) {
             } else if (error.response.status === 409) {
                 setErro(<p>Esse e-mail já foi cadastrado</p>);
             } else {
-                alert("Infelizmente, não foi possível ralizar o cadastro. Tente novamente mais tarde.");
+                alert("Infelizmente, não foi possível realizar o cadastro. Tente novamente mais tarde.");
             }
             console.log(error);
         });

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import axios from "axios";
 
 
 
-export default function Login({URL_BACK, setToken}) {
+export default function Login({ URL_BACK, setToken }) {
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -13,15 +13,17 @@ export default function Login({URL_BACK, setToken}) {
 
     const navigate = useNavigate();
 
-    if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
-        navigate("/");
-    }
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            setToken(localStorage.getItem("token"));
+            navigate("/");
+        }
+    });
 
     function loginForm(event) {
         event.preventDefault();
-        
-        const promisse = axios.post(URL_BACK+"/login", {
+
+        const promisse = axios.post(URL_BACK + "/login", {
             email: email,
             password: password
         })
