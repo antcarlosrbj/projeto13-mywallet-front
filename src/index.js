@@ -9,7 +9,7 @@ import Entry from './components/Entry.js';
 
 function App() {
 
-    const URL_BACK = "http://localhost:5050";
+    const URL_BACK = "https://mywallet-ac.herokuapp.com";
 
     const [token, setToken] = React.useState("");
     const [name, setName] = React.useState("");
